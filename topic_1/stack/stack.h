@@ -19,7 +19,6 @@ class Stack {
 
     // T peek(): returns the top item without removing it from the stack. 
     // throw EmptyStackError if stack is empty
-
     T peek() {
         if(top == 0) throw EmptyStackError();
 
@@ -27,13 +26,23 @@ class Stack {
     }
 
     // bool empty(): returns true if the stack is empty or false otherwise
-    
+    bool empty() { return top == 0; }
+
     // void push(T item): push the item onto stack
     // throw FullStackError if stack is full
+    void push(const T& item) {
+        if(top == S) throw FullStackError();
+        
+        store[top++] = item;
+    }
 
     // void pop(): removes the top item from the stack
     // throw EmptyStackError if stack is empty
+    void pop() {
+        if(top == 0) throw EmptyStackError();
 
+        --top;
+    }
     private:
 
         T store[S];
