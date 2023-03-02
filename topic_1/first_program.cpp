@@ -1,8 +1,11 @@
 #include <iostream>
 
-int main() {
-
-    int value{1500};
-
-    std::cout << "Goodbye cruel world!\n" << value << std::endl;
+int main(int argc, char const *argv[])
+{
+    for (size_t i = 1; i < argc; ++i)
+    {
+        std::cout << argv[i] << std::endl;
+    }
+    
+    return 0;
 }
