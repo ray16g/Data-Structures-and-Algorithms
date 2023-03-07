@@ -34,6 +34,8 @@ public:
         if(ptr < 0) throw std::runtime_error("remove on bag; item does not exist");
         T rtnItem = store[ptr];
         store[ptr] = store[--count];
+
+        return rtnItem;
     }
 
     // returns the count of items in the bag
