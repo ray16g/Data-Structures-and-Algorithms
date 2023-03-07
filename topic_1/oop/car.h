@@ -10,7 +10,8 @@ public:
     Car(); 
     Car(const std::string&, const std::string&, const std::string&);
 
-    std::string getVin();
+    std::string getId() const;
+
 
 private:
     std::string vin;

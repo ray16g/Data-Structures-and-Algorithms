@@ -8,4 +8,4 @@ Car::Car(const std::string& color, const std::string& powerSource, const std::st
 }
 Car::Car() : Car("", "", "00000000") {}
 
-std::string Car::getVin() { return vin; }
+std::string Car::getId() const { return vin; }

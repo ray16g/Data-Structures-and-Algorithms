@@ -13,6 +13,6 @@ void Vehicle::setType(const std::string& type) {
 
     this->type = type;
 }
-std::string Vehicle::getType() {
+std::string Vehicle::getType() const {
     return type;
 }
