@@ -11,9 +11,6 @@ int main(int argc, char const *argv[])
         ab.add(i);
     }
 
-    for(size_t i = 20; i < 30; ++i) {
-        ab.remove(i);
-    }
     
     while(ab.size() > 0)
     {
