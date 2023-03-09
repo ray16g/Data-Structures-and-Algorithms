@@ -13,6 +13,8 @@ class ArrayBag : Bag<T>
 {
 public:
 
+    ~ArrayBag() { delete[] store; }
+
     ArrayBag() : ArrayBag(DEFAULT_SIZE) {}
 
     ArrayBag(const size_t initialSize) : count{0}, currentSize{initialSize}, store{new T[initialSize]} {}
