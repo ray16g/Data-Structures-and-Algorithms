@@ -22,7 +22,7 @@ public:
     /* Adds an item to the back of the queue */
     void enqueue(const T& item) 
     {
-        if(back + first >= size)
+        if(count >= size)
             resize();
 
         if(back >= size)
@@ -76,7 +76,7 @@ private:
         delete[] store;
 
         size = newSize;
-        back = first + back;
+        back = count;
         first = 0;
         store = newStore;
     }
