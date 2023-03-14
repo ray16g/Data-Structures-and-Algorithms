@@ -60,7 +60,7 @@ public:
         delete[] store;
 
         store = new T[DEFAULT_SIZE];
-        first, back, count = 0;
+        first = back = count = 0;
     }
 
 private:
