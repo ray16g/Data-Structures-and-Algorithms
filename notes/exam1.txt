@@ -1,0 +1,21 @@
+- No true or false or multiple choice questions, only short answers
+- Arrays
+    - Know how to work with an array when it comes to ordered collections and unordered collections
+    - Know how to resize an array
+- Create an interface when ADT is given
+    - Only implement functions and variables that are asked to be implemented
+    - Implementation of an entire data structure is out the door, most likely be asked to implement from an interface of a data structure
+- Definitions, concepts, and terminology
+    - Inheritance and polymorphism
+    - Describe and define ADT and data structure
+    - Know how to describe the different types of linked lists (Single, double, circular)
+    - Know the TEXT, DATA, BSS, HEAP, and STACK sections
+    - Ordering of the stack and the initials
+    - Know why things end up in the stack or the heap
+    - Different types of object oriented programming concepts and relationships between objects
+- Algorithm analysis
+    - Pseudo code that shows an algorithm and explain the Big O and how you came up with that value
+        - Back substitution
+        - Recurrence relation
+        - Big O should be in terms of n (no constants)
+    

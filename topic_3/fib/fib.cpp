@@ -9,12 +9,12 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-// uint64_t fib(uint32_t n) 
-// {
-//     if(n <= 1) return n;
+uint64_t fib(uint32_t n) 
+{
+    if(n <= 1) return n;
 
-//     return fib(n - 1) + fib(n - 2);
-// }
+    return fib(n - 1) + fib(n - 2);
+}
 
 uint64_t fib(uint32_t n)
 {
