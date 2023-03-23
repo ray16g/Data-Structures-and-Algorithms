@@ -1,0 +1,4 @@
+Pre-order: A B D H I E C F G J K
+In-order: H D I B E A F C J G K
+Post-order: H I D E B F J K G C A
+Level-order: A B C D E F G H I J K
