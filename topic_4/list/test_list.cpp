@@ -1,7 +1,7 @@
-// who:  
+// who:  Raymond Huang
 // what: Test Linked List
 // why:  Topic 2: List ADT
-// when: 
+// when: 2023-03-28
 
 #include <iostream>
 
