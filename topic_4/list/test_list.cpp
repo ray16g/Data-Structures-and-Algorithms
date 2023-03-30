@@ -11,7 +11,7 @@
 
 int main(int argc, char const *argv[])
 {
-    LinkedList<int>* list = new LinkedList<int>();
+    List<int>* list {new LinkedList<int>};
 
     equals<bool>(true, list->empty(), "Empty list is empty");
 

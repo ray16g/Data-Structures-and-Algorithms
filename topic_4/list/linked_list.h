@@ -20,7 +20,7 @@ public:
     LinkedList() : head{nullptr}, tail{nullptr}, length{1} {}
 
     /** virtual destructor */
-    ~LinkedList() { }
+    ~LinkedList() { clear(); }
 
     /** Add an item to the list 
      * Param1: the item to add */
