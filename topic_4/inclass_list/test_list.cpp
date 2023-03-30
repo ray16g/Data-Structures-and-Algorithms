@@ -10,6 +10,7 @@
 #include "linked_list.h"
 
 void testAddAt();
+void testRemoveAt();
 
 int main(int argc, char const *argv[])
 {
@@ -58,8 +59,24 @@ int main(int argc, char const *argv[])
     }
 
     testAddAt();
+    testRemoveAt();
+    
+    delete list;
 
     return 0;
+}
+
+void testRemoveAt()
+{
+    List<double>* list {new LinkedList<double>};
+    for(size_t i = 1.0; i <= 10; ++i)
+        list->add(i);
+
+    equals<double>(list->size() + 1, list->remove(list->size()), "test remove last");
+
+
+    delete list;
+
 }
 
 void testAddAt()
@@ -90,5 +107,7 @@ void testAddAt()
     {
         std::cout << "ERROR: test add at throws different exception" << std::endl;
     }
+
+    delete list;
     
 }

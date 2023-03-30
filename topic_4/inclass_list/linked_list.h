@@ -65,16 +65,48 @@ public:
     
     /** Rempove and return an item at a certain position 
      * Param1: the poisition of the item to remove and return (1 <= p <= n) */
-    T remove(size_t) 
+    T remove(size_t pos) 
     {
-        return T{};
+        if(pos < 1 || pos > count) 
+            throw std::out_of_range("index out of range");
+
+        T item;
+        Node<T>* it{nullptr};
+        Node<T>* tmp{nullptr};
+
+        if(pos == 1)
+        {
+            item = head->item;
+            it = head;
+            head = head->next;
+            if(empty()) tail = nullptr;
+            delete it;
+        }
+        else
+        {
+            it = nodeAt(pos - 1);
+            tmp = it->next;
+            item = tmp->item;
+            it->next = tmp->next;
+            if(tail == tmp) tail = it;
+            delete tmp;
+        }
+
+        --count;
+        return item;
     }
 
     /** Replace an item in the list at a certain position
      * Param1: The item to add to the list
      * Param2: The position of the item that gets replaced (1 <= p <= n)
      * Throws: std::out_of_range error if param1 is out of range */ 
-    void replace(const T&, size_t) {}
+    void replace(const T& item, size_t pos) 
+    {
+        if(pos < 1 || pos > count) 
+            throw std::out_of_range("index out of range");
+
+        nodeAt(pos)->item = item;
+    }
 
     /** Returns the item at a certain position but does not remove it
      * Param1: the position of the item to be returned (1 <= p <= n) 
