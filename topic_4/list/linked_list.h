@@ -53,6 +53,7 @@ public:
         if(pos == length + 1)
         {
             add(item);
+            return;
         }
         else if(pos == 1)
         {

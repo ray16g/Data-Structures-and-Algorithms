@@ -9,6 +9,8 @@
 #include "list.h"
 #include "linked_list.h"
 
+void testAddAt();
+
 int main(int argc, char const *argv[])
 {
     List<double>* list = {new LinkedList<double>()};
@@ -54,6 +56,39 @@ int main(int argc, char const *argv[])
     {
         std::cout << "ERROR: test at throws different exception" << std::endl;
     }
-    
+
+    testAddAt();
+
     return 0;
+}
+
+void testAddAt()
+{
+    List<double>* list {new LinkedList<double>};
+    for(size_t i = 1.0; i <= 10; ++i)
+        list->add(i);
+    
+    list->add(0.5,1);
+    equals<double>(0.5, list->at(1), "test add at 1");
+    list->add(10.5, 12);
+    equals<double>(10.5, list->at(12), "test add at 12");
+    list->add(6.5,6);
+    equals<double>(6.5,list->at(6), "test add at 6");
+
+    try
+    {
+        list->add(6.5, list->size() + 2);
+        std::cout << "ERROR: test add at does not throw out of range exception" << std::endl;
+
+    }
+    catch(const std::out_of_range)
+    {
+        std::cout << "SUCCESS: test add at throws out of range exception" << std::endl;
+
+    }
+    catch(const std::exception&)
+    {
+        std::cout << "ERROR: test add at throws different exception" << std::endl;
+    }
+    
 }

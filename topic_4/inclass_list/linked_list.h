@@ -41,8 +41,26 @@ public:
      * Throws: std::out_of_range error if param1 is out of range */ 
     void add(const T& item, size_t pos) 
     {
-        if(pos < 0 || pos > count + 1) 
+        if(pos < 1 || pos > count + 1)
             throw std::out_of_range("index out of range");
+
+        if(pos == 1)
+        {
+            head = new Node<T>{item, head};
+            if(tail == nullptr)
+                tail = head;
+            ++count;
+        }
+        else if(pos == count + 1)
+        {
+            add(item);
+        }
+        else
+        {
+            Node<T>* prev{nodeAt(pos-1)};
+            prev->next = new Node<T>{item, prev->next};
+            ++count;
+        }
     }
     
     /** Rempove and return an item at a certain position 
@@ -64,7 +82,7 @@ public:
      * Throws: std::out_of_range error if param1 is out of range */ 
     T at(size_t pos) const 
     {
-        if(pos < 0 || pos > count) 
+        if(pos < 1 || pos > count) 
             throw std::out_of_range("index out of range");
 
         int i;
@@ -128,6 +146,18 @@ private:
     Node<T>* tail;
     size_t count;
 
+    Node<T>* nodeAt(size_t pos)
+    {
+        Node<T>* it{head};
+
+        while(pos > 1)
+        {
+            it = it->next;
+            --pos;
+        }
+
+        return it;
+    }
 };
 
 
