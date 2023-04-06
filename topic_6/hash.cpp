@@ -14,13 +14,27 @@ int min(int l, int r)
     return (l < r ? l : r);
 }
 
+template<typename T>
+int hashcode(const T& obj)
+{
+    size_t size{sizeof(T) / sizeof(int)};
+    int* it {reinterpret_cast<int*>(&obj)};
+    int code{0};
+    for(size_t i = 0; i < size; ++i)
+    {
+        code ^= *it;
+        ++it;
+    }
+
+    return code;
+}
+
 int hashcode(const std::string& k)
 {
     int code{0};
 
     for (size_t i = 0; i < min(15, k.size()); i++)
         code = code * 10 + k[i];
-    
 
     return code;
 }
@@ -44,12 +58,29 @@ int hashcode(double k)
 
 int compress(int hc)
 {
-    return (hc & ~(1 << 31)) % ARRAY_SIZE;
+    // return (hc & ~(1 << 31)) % ARRAY_SIZE;
+
+    srand(hc);
+    return rand() % ARRAY_SIZE;
 } 
 
 int main(int argc, char const *argv[])
 {
     // std::cout << hashcode(25ll) << std::endl;
-    std::cout << hashcode("nbvnbvnbnbvjhgmmmmmmmmmmmmmmmm") << std::endl;
+    std::cout << compress(hashcode(20)) << std::endl;
+    std::cout << compress(hashcode(40)) << std::endl;
+    std::cout << compress(hashcode(60)) << std::endl;
+    std::cout << compress(hashcode(80)) << std::endl;
+    std::cout << std::endl;
+    std::cout << compress(hashcode(20)) << std::endl;
+    std::cout << compress(hashcode(40)) << std::endl;
+    std::cout << compress(hashcode(60)) << std::endl;
+    std::cout << compress(hashcode(80)) << std::endl;
+    std::cout << std::endl;
+    std::cout << compress(hashcode(20)) << std::endl;
+    std::cout << compress(hashcode(40)) << std::endl;
+    std::cout << compress(hashcode(60)) << std::endl;
+    std::cout << compress(hashcode(80)) << std::endl;
+    
     return 0;
 }
