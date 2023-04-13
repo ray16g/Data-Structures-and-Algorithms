@@ -39,21 +39,17 @@ int main(int argc, char const *argv[])
     )};
 
     /** add an item to the heap */
-    testAdd(heap);
-    heap->clear();
+    testAdd(new ArrayHeap<int>(maxComparator));
     /** remove the extrema item from the heap
      *  throws runtime error if the heap is empty
     */
-    testRemove(heap);
-    heap->clear();
+    testRemove(new ArrayHeap<int>(maxComparator));
     /** get the extrema item from the heap without removing it 
      *  throws runtime error if the heap is empty
     */
-    testGet(heap);
-    heap->clear();
+    testGet(new ArrayHeap<int>(maxComparator));
     /** returns true if heap is empty or false otherwise*/
-    testEmpty(heap);
-    heap->clear();
+    testEmpty(new ArrayHeap<int>(maxComparator));
 
 
     return 0;
