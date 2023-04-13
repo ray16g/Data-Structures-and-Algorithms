@@ -30,7 +30,7 @@ class HashSet : public Set<T>
 public:
     HashSet(HASHER hasher) : HashSet(hasher, Prober::LINEAR) { }
     HashSet(HASHER hasher, Prober prober) 
-        : currentSize{DEFAULT_SIZE}, count{0}, hasher{hasher}, store = new Entry<T>[DEFAULT_SIZE], prober{prober} { }
+        : currentSize{DEFAULT_SIZE}, count{0}, hasher{hasher}, store{new Entry<T>[DEFAULT_SIZE]}, prober{prober} { }
 
 
     /** adds an item to the set. 
@@ -47,7 +47,8 @@ public:
 
         if(idx > 0)
         {
-            store[idx] = new Entry<T>{item, State::Used};
+            Entry<T> entry = new Entry<T>{item, State::Used};
+            store[idx] = entry;
             ++count;
         }
             
@@ -62,7 +63,7 @@ public:
 
         if(idx < 0) throw std::runtime_error("Remove on item that is not a member of set");
 
-        store[idx]->state = State::Free;
+        store[idx].state = State::Free;
         --count;
 
         return item;
@@ -89,7 +90,7 @@ public:
     }
 
 private:
-    T* store;
+    Entry<T>* store;
     size_t currentSize;
     size_t count;
     HASHER hasher; 
@@ -133,7 +134,7 @@ private:
     void resize()
     {
         size_t newSize{ currentSize * SCALING_FACTOR };
-        T* newStore{new T[newSize]};
+        Entry<T>* newStore{new Entry<T>[newSize]};
         
         for (size_t i = 0; i < count; ++i) 
             newStore[i] = store[i];
