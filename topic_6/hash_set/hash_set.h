@@ -43,12 +43,11 @@ public:
         // if size() > currentSize * 0.75
         if(size() > (currentSize >> 1 + currentSize >> 2)) resize();
 
-        int idx{probe(hasher(item) % currentSize, [=](Entry<T> entry) { return entry.state == State::Empty || entry.state == State::Free; })};
+        int idx{probe(hasher(item) % currentSize, [](Entry<T> entry) { return entry.state == State::Empty || entry.state == State::Free; })};
 
         if(idx > 0)
         {
-            Entry<T> entry = new Entry<T>{item, State::Used};
-            store[idx] = entry;
+            store[idx] = Entry<T>{item, State::Used};
             ++count;
         }
             
@@ -78,9 +77,7 @@ public:
     /** returns true if the item is a member or false otherwise */
     bool contains(const T& item) const
     {
-        int idx{probe(hasher(item) % currentSize, [=](Entry<T> entry) { return entry.state == State::Used && entry.item == item; })};
-
-        return idx > 0;
+        return probe(hasher(item) % currentSize, [=](Entry<T> entry) { return entry.state == State::Used && entry.item == item; }) > 0;
     }
 
     /** returns the number of members in the set */
@@ -96,7 +93,7 @@ private:
     HASHER hasher; 
     Prober prober;
 
-    int probe(const T& key, COMPARATOR comparator)
+    int probe(const T& key, COMPARATOR comparator) const
     {
         switch (prober)
         {
@@ -107,7 +104,7 @@ private:
         }
     }
 
-    int linearProbe(size_t hcode, COMPARATOR comparator)
+    int linearProbe(size_t hcode, COMPARATOR comparator) const
     {
         int idx;
         for(int i = 0; i < PROBING_ATTEMPTS; ++i)
@@ -119,7 +116,7 @@ private:
         return -1;
     }
 
-    int quadraticProbe(size_t hcode, COMPARATOR comparator)
+    int quadraticProbe(size_t hcode, COMPARATOR comparator) const
     {
         int idx;
         for(int i = 0; i < PROBING_ATTEMPTS; ++i)
