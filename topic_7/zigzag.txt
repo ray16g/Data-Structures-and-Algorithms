@@ -1,0 +1,15 @@
+rotateRight(node* n)
+{
+    node* t = n.lchild;
+    n.lchild = t.rchild;
+    t.rchild = n;
+    return t;
+}
+
+rotateLeft(node* n)
+{
+    node* t = n.rchild;
+    n.rchild = t.lchild;
+    t=lchild = n;
+    return t;
+}
