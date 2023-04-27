@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     printArray(array, count);
 
-    Sort<int>::selectSort(array, count, [] (int a, int b) { return a > b; });
+    Sort<int>::radixSort(array, count);
 
     printArray(array, count);
 
