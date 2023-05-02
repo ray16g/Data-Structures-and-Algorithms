@@ -25,22 +25,21 @@ public:
     static void radixSort(int array[], size_t count)
     {
         int index;
-        std::vector<int> src0;
-        std::vector<int> src1;
+        std::vector<int> src[2];
 
         for (size_t i = 0; i < count; ++i)
         {
-            ((array[i] & mask) ? src1 : src0).push_back(array[i]);
+            ((array[i] & mask) ? src[1] : src[0]).push_back(array[i]);
         }
         
-        sortBuckets(src0, src1);
+        sortBuckets(src);
         
         index = 0;
-        for (size_t i = 0; i < src0.size(); ++i)
-            array[index++] = src0[i];
+        for (size_t i = 0; i < src[0].size(); ++i)
+            array[index++] = src[0][i];
         
-        for (size_t i = 0; i < src1.size(); ++i)
-            array[index++] = src1[i];
+        for (size_t i = 0; i < src[1].size(); ++i)
+            array[index++] = src[1][i];
 
     }
 
@@ -59,32 +58,36 @@ private:
         
     }
 
-    static void sortBuckets(std::vector<int>& src0, std::vector<int>& src1)
+    static void sortBuckets(std::vector<int> in[])
     {
-        std::vector<int> dst0;
-        std::vector<int> dst1;
+        std::vector<int> tmp[2];
+        std::vector<int>* dst;
+        std::vector<int>* src;
 
         for (size_t i = 1; i < sizeof(int) << 3; ++i)
         {
-            dst0.clear();
-            dst1.clear();
+            src = (i & 1) ? in : tmp;
+            dst = (i & 1) ? tmp : in;
 
-            for(int j = 0; j < src0.size(); ++j)
-                (src0[j] & (mask << i) ? dst1 : dst0).push_back(src0[j]);
+            dst[0].clear();
+            dst[1].clear();
 
-            for(int j = 0; j < src1.size(); ++j)
-                (src1[j] & (mask << i) ? dst1 : dst0).push_back(src1[j]);
-            
-            copyBuckets(dst0, src0);
-            copyBuckets(dst1, src1);
+            for(int j = 0; j < src[0].size(); ++j)
+                (src[0][j] & (mask << i) ? dst[1] : dst[0]).push_back(src[0][j]);
+
+            for(int j = 0; j < src[1].size(); ++j)
+                (src[1][j] & (mask << i) ? dst[1] : dst[0]).push_back(src[1][j]);
         }
     }
 
-    static void copyBuckets(std::vector<int>& src, std::vector<int>& dst)
+    static void copyBuckets(std::vector<int> src[], std::vector<int> dst[])
     {
-        dst.clear();
-        for(int j = 0; j < src.size(); ++j)
-            dst.push_back(src[j]);
+        for(int i = 0; i < 2; ++i)
+        {
+            dst[i].clear();
+            for(int j = 0; j < src[i].size(); ++j)
+                dst[i].push_back(src[i][j]);
+        }
     }
 
     static void swap(T array[], size_t a, size_t b)
