@@ -40,10 +40,112 @@ public:
         
         for (size_t i = 0; i < src[1].size(); ++i)
             array[index++] = src[1][i];
+    }
+
+    
+    static void mergeSort(T array[], size_t count)
+    {
+        mergeSort(array, 0, count - 1);
+    }
+
+    static void quickSort(T array[], size_t count)
+    {
+        quickSort(array, 0, count - 1);
+    }
+
+    static T selection(const T array[], size_t count, size_t position)
+    {
 
     }
 
 private:
+    
+    static void swap(T& v1, T& v2)
+    {
+        T temp = v1;
+        v1 = v2;
+        v2 = temp;
+    }
+
+    static void quickSort(T array[], size_t start, size_t end)
+    {
+        if(start >= end) return;
+
+        size_t r = partition(array, start, end, end);
+
+        quickSort(array, start, r - 1);
+        quickSort(array, r + 1, end);
+
+    }
+
+    static size_t partition(T array[], size_t start, size_t end, size_t p)
+    {
+        size_t pivotptr{end};
+        size_t pivot{array[p]};
+        size_t ptr{start};
+
+        while(ptr < pivotptr)
+        {
+            while(array[ptr] < pivot && ptr < pivotptr)
+            {
+                ++ptr;
+            }
+            while(array[pivotptr] > pivot && ptr < pivotptr)
+            {
+                --pivotptr;
+            }
+            swap(array[ptr], array[pivotptr]);
+        }
+
+        return ptr;
+    }
+
+    static void merge(T array[], size_t start, size_t mid, size_t end)
+    {
+        size_t newArr[end - start + 1];
+
+        size_t arrptr{0};
+
+        size_t lptr{start};
+        size_t rptr{mid + 1};
+
+        while(lptr <= mid && rptr <= end)
+        {
+            if(array[lptr] < array[rptr])
+                newArr[arrptr++] = array[lptr++];
+            else
+                newArr[arrptr++] = array[rptr++];
+        }
+
+        if(lptr <= mid)
+        {
+            for(; lptr <= mid; ++lptr)
+                newArr[arrptr++] = array[lptr];
+        }
+
+        if(rptr <= end)
+        {
+            for(; rptr <= end; ++rptr)
+                newArr[arrptr++] = array[rptr];
+        }
+
+        for (size_t i = start, j = 0; i <= end; i++, j++)
+            array[i] = newArr[j];
+
+    }
+
+    static void mergeSort(T array[], size_t start, size_t end)
+    {
+        if(start >= end) return;
+
+        size_t mid{start + (end - start) / 2};
+
+        mergeSort(array, start, mid);
+        mergeSort(array, mid + 1, end);
+
+        merge(array, start, mid, end);
+    }
+
     static size_t getExtrema(T array[], size_t start, size_t end, Comparator compare)
     {
         size_t extrema{start};

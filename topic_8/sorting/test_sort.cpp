@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 
     printArray(array, count);
 
-    Sort<int>::radixSort(array, count);
+    Sort<int>::quickSort(array, count);
     //std::qsort(array, count, sizeof(array[0]), 
     //   [] (const void* a, const void* b) { return *(int*)a - *(int*)b; });
 
