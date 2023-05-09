@@ -66,7 +66,6 @@ public:
     }
 
 private:
-    
     static void swap(T& v1, T& v2)
     {
         T temp = v1;

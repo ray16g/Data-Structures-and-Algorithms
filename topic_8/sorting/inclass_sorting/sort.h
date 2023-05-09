@@ -59,9 +59,14 @@ public:
         delete[] tmp;
     }
 
-    static T selection(const T array[], size_t count, size_t position)
-    {
 
+    // for k: 1 <= k <= n 
+    static T quickSelect(T array[], size_t size, size_t k)
+    {
+        if(k < 1) throw std::runtime_error("Bad value for k");
+        if(size == 1) return array[0];
+
+        return quickSelect(array, 0, size - 1, k - 1);
     }
 
 private:
@@ -141,6 +146,20 @@ private:
         {
             dst[i] = src[i];
         }
+    }
+
+    static T quickSelect(T array[], size_t start, size_t end, size_t pos)
+    {
+        size_t pivot{partition(array, start, end)};
+
+        if(pivot == pos)
+            return array[pivot];
+
+        if(pivot < pos)
+            return quickSelect(array, pivot + 1, end, pos);
+
+        return quickSelect(array, 0, pivot - 1, pos);
+            
     }
 
     static size_t getExtrema(T array[], size_t start, size_t end, Comparator compare)

@@ -21,6 +21,7 @@ int main(int argc, char const *argv[])
     printArray(array, count);
 
     Sort<int>::mergeSort(array, count);
+    std::cout << "The 4th smallest element in the array is " << Sort<int>::quickSelect(array, count, 4) << std::endl;
     //std::qsort(array, count, sizeof(array[0]), 
     //   [] (const void* a, const void* b) { return *(int*)a - *(int*)b; });
 
