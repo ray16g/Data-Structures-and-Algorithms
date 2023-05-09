@@ -1,5 +1,4 @@
 #include<functional>
-#include<vector>
 
 #ifndef SORT_H
 #define SORT_H
@@ -43,26 +42,26 @@ public:
             array[index++] = src[1][i];
     }
 
-    
-    static void mergeSort(T array[], size_t count)
+    static void quickSort(T array[], size_t size)
     {
-        mergeSort(array, 0, count - 1);
+        if(size <= 1) return;
+
+        quickSort(array, 0, size - 1);
     }
 
-    static void quickSort(T array[], size_t count)
+    static void mergeSort(T array[], size_t size)
     {
-        quickSort(array, 0, count - 1);
+        if(size <= 1) return;
+        static T* tmp{new T[size]};
+
+        mergeSort(array, 0, size - 1, tmp);
+
+        delete[] tmp;
     }
 
     static T selection(const T array[], size_t count, size_t position)
     {
-        T newArray[count];
 
-        for(int i = 0; i < count; i++)
-            newArray[i] = array[i];
-    
-
-        return selection(newArray, position, 0, count - 1);
     }
 
 private:
@@ -78,76 +77,70 @@ private:
     {
         if(start >= end) return;
 
-        size_t r = partition(array, start, end);
+        size_t pivot{partition(array, start, end)};
 
-        quickSort(array, start, r - 1);
-        quickSort(array, r + 1, end);
+        if(start < pivot)
+            quickSort(array, start, pivot - 1);
+        quickSort(array, pivot + 1, end);
 
     }
 
     static size_t partition(T array[], size_t start, size_t end)
     {
-        size_t pivot{array[end]};
-        size_t ptr{start};
-        size_t pivotptr{start};
+        size_t idx{start};
+        size_t pivotIdx{start};
 
-        for(; ptr <= end - 1; ptr++)
+        for(; idx < end; ++idx)
         {
-            if(array[ptr] < pivot)
-            {
-                swap(array[ptr], array[pivotptr]);
-                ++pivotptr;
-            }
-        }
-        swap(array[pivotptr], array[end]);
+            if(array[idx] > array[end]) continue;
 
-        return pivotptr;
+            if(pivotIdx != idx) swap(array[idx], array[pivotIdx]);
+
+            ++pivotIdx;
+        }
+
+        swap(array[end], array[pivotIdx]);
+
+        return pivotIdx;
     }
 
-    static void merge(T array[], size_t start, size_t mid, size_t end)
-    {
-        size_t newArr[end - start + 1];
-
-        size_t arrptr{0};
-
-        size_t lptr{start};
-        size_t rptr{mid + 1};
-
-        while(lptr <= mid && rptr <= end)
-        {
-            if(array[lptr] < array[rptr])
-                newArr[arrptr++] = array[lptr++];
-            else
-                newArr[arrptr++] = array[rptr++];
-        }
-
-        if(lptr <= mid)
-        {
-            for(; lptr <= mid; ++lptr)
-                newArr[arrptr++] = array[lptr];
-        }
-
-        if(rptr <= end)
-        {
-            for(; rptr <= end; ++rptr)
-                newArr[arrptr++] = array[rptr];
-        }
-
-        for (size_t i = start, j = 0; i <= end; i++, j++)
-            array[i] = newArr[j];
-
-    }
-
-    static void mergeSort(T array[], size_t start, size_t end)
+    static void mergeSort(T array[], size_t start, size_t end, T tmp[])
     {
         if(start >= end) return;
 
-        size_t mid{start + (end - start) / 2};
+        size_t mid((start + end) >> 1);
 
-        mergeSort(array, start, mid);
-        mergeSort(array, mid + 1, end);
+        mergeSort(array, start, mid, tmp);
+        mergeSort(array, mid + 1, end, tmp);
 
-        merge(array, start, mid, end);
+        merge(array, start, mid, end, tmp);
+    }
+
+    static void merge(T array[], size_t start, size_t mid, size_t end, T tmp[])
+    {
+        size_t leftIdx{start};
+        size_t rightIdx{mid + 1};
+        size_t arrayIdx{start};
+
+        copyPartition(array, tmp, start, end);
+
+        while(leftIdx <= mid && rightIdx <= end)
+            array[arrayIdx++] = (tmp[leftIdx] <= tmp[rightIdx]) ? tmp[leftIdx++] : tmp[rightIdx++];
+
+        while(leftIdx <= mid)
+            array[arrayIdx++] = tmp[leftIdx++];
+
+        while(rightIdx <= end)
+            array[arrayIdx++] = tmp[rightIdx++];
+
+    }
+
+    static void copyPartition(T src[], T dst[], size_t start, size_t end)
+    {
+        for(size_t i = start; i <= end; ++i)
+        {
+            dst[i] = src[i];
+        }
     }
 
     static size_t getExtrema(T array[], size_t start, size_t end, Comparator compare)
@@ -201,27 +194,6 @@ private:
         T temp{array[a]};
         array[a] = array[b];
         array[b] = temp;
-    }
-
-    static T selection(T array[], size_t position, size_t start, size_t end)
-    {
-        if(start >= end) return array[start];
-
-        size_t p = partition(array, start, end);
-
-        if(p < position)
-        {
-            return selection(array, position, p + 1, end);
-        }
-        else if (p > position)
-        {
-            return selection(array, position, start, p - 1);
-        }
-        else
-        {
-            return array[p];
-        }
-        
     }
 };
 
