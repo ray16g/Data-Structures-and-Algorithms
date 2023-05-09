@@ -61,12 +61,20 @@ public:
 
 
     // for k: 1 <= k <= n 
-    static T quickSelect(T array[], size_t size, size_t k)
+    static T quickSelect(const T array[], size_t size, size_t k)
     {
-        if(k < 1) throw std::runtime_error("Bad value for k");
+        if(k < 1 || k > size) throw std::runtime_error("Bad value for k");
         if(size == 1) return array[0];
 
-        return quickSelect(array, 0, size - 1, k - 1);
+        T* tmp {new T[size]};
+
+        copyPartition(array, tmp, 0, size - 1);
+
+        T ret{quickSelect(tmp, 0, size - 1, k - 1)};
+
+        delete[] tmp;
+
+        return ret;
     }
 
 private:
@@ -140,7 +148,7 @@ private:
 
     }
 
-    static void copyPartition(T src[], T dst[], size_t start, size_t end)
+    static void copyPartition(const T src[], T dst[], size_t start, size_t end)
     {
         for(size_t i = start; i <= end; ++i)
         {
