@@ -1,4 +1,5 @@
 #include<functional>
+#include<vector>
 
 #ifndef SORT_H
 #define SORT_H
@@ -55,7 +56,13 @@ public:
 
     static T selection(const T array[], size_t count, size_t position)
     {
+        T newArray[count];
 
+        for(int i = 0; i < count; i++)
+            newArray[i] = array[i];
+    
+
+        return selection(newArray, position, 0, count - 1);
     }
 
 private:
@@ -71,33 +78,30 @@ private:
     {
         if(start >= end) return;
 
-        size_t r = partition(array, start, end, end);
+        size_t r = partition(array, start, end);
 
         quickSort(array, start, r - 1);
         quickSort(array, r + 1, end);
 
     }
 
-    static size_t partition(T array[], size_t start, size_t end, size_t p)
+    static size_t partition(T array[], size_t start, size_t end)
     {
-        size_t pivotptr{end};
-        size_t pivot{array[p]};
+        size_t pivot{array[end]};
         size_t ptr{start};
+        size_t pivotptr{start};
 
-        while(ptr < pivotptr)
+        for(; ptr <= end - 1; ptr++)
         {
-            while(array[ptr] < pivot && ptr < pivotptr)
+            if(array[ptr] < pivot)
             {
-                ++ptr;
+                swap(array[ptr], array[pivotptr]);
+                ++pivotptr;
             }
-            while(array[pivotptr] > pivot && ptr < pivotptr)
-            {
-                --pivotptr;
-            }
-            swap(array[ptr], array[pivotptr]);
         }
+        swap(array[pivotptr], array[end]);
 
-        return ptr;
+        return pivotptr;
     }
 
     static void merge(T array[], size_t start, size_t mid, size_t end)
@@ -197,6 +201,27 @@ private:
         T temp{array[a]};
         array[a] = array[b];
         array[b] = temp;
+    }
+
+    static T selection(T array[], size_t position, size_t start, size_t end)
+    {
+        if(start >= end) return array[start];
+
+        size_t p = partition(array, start, end);
+
+        if(p < position)
+        {
+            return selection(array, position, p + 1, end);
+        }
+        else if (p > position)
+        {
+            return selection(array, position, start, p - 1);
+        }
+        else
+        {
+            return array[p];
+        }
+        
     }
 };
 
