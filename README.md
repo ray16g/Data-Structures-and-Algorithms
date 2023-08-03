@@ -1,3 +1,3 @@
-# CSCI 240
+# Data Structures and Algorithms
 
-My repo for CSCI 240
+My repo for Data Structures and Algorithms
